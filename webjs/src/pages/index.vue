@@ -26,7 +26,53 @@
         components: {
             general_data,
             additional_data,
+        },
+        data() {
+            return {
+                posts:[],
+                error_msg:'',
+                timer: ''
+            }
+        },
+        async asyncData ({ $axios }) {
+              let async_data={posts:[]};
+              await $axios.$get('/server/main/dashboard').then(response => {
+                    async_data.posts=response.posts;
+        })
+                .catch(e => {
+                    console.log('error response')
+                    let response=e.response.data
+                    async_data={
+                        error_msg:'internal_server error'}
+                });
+            return async_data
+
+        },
+        async mounted() {
+            await this.getData();
+            this.timer = setInterval(this.getData, 30000)
+
+          },
+        beforeDestroy () {
+      clearInterval(this.timer)
+    },
+
+
+    methods: {
+        async getData() {
+         await this.$axios.$get('/server/main/dashboard').then(response => {
+
+                         this.posts=response.posts;
+
+                    })
+                    .catch(e => {
+                        console.log('error response')
+                        this.error_msg='internal_server error'
+                    })
+
+
         }
+    }
     }
 </script>
 

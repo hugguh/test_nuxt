@@ -4,7 +4,7 @@
 module.exports = {
   server: {
     port: 8015, // default: 3000
-    host: '0.0.0.0' // default: localhost
+    host: '127.0.0.1' // default: localhost
   },
   srcDir: 'src/',
   build: {
@@ -53,5 +53,6 @@ module.exports = {
         proxyHeaders:true,
         proxy: true
     },
+    serverMiddleware: ['~/api/index.js']
 
 }
