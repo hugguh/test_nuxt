@@ -1,0 +1,7 @@
+docker build -t nuxt-js-nginx .
+docker container stop nuxt-js-nginx
+docker container rm nuxt-js-nginx
+docker run --rm \
+           --name nuxt-js-nginx\
+           --net=host \
+           -it nuxt-js-nginx
